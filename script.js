@@ -1,6 +1,6 @@
- /* Opdracht Objectgeorienteerd programmeren
-    Informatica - Emmauscollege Rotterdam
- */
+/* Opdracht Objectgeorienteerd programmeren
+   Informatica - Emmauscollege Rotterdam
+*/
 
 /* ******************************************************* */
 /* instellingen om foutcontrole van je code beter te maken */
@@ -33,11 +33,10 @@ function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
   createCanvas(1280, 720);
 
-  // initialiseer waarden
-  xPositions = width / 2;               // midden van de breedte van het canvas
-  yPositions = height / 2;              // midden van de hoogte van het canvas
-  speedX = random(-5, 5);      // random waarde tussen -5 en 5
-  speedY = random(-5, 5);      // 👆
+  xPositions = [random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE)];
+  yPositions =[ random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE)];
+  speedX =  [random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5)];
+  speedY = [random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5)];
 }
 
 /**
@@ -49,22 +48,24 @@ function draw() {
   // zwarte achtergrond
   background(0, 0, 0);
 
-  // teken
-  noStroke;
-  fill(255, 255, 255);
-  rect(xPositions, yPositions, BREEDTE, BREEDTE);
+  //loop
+  for (var i = 0; i < xPositions.length; i++) {
+    // teken
+    noStroke;
+    fill(255, 255, 255);
+    rect(xPositions[i], yPositions[i], BREEDTE, BREEDTE);
 
-  // update positie
-  xPositions = xPositions + speedX;
-  yPositions = yPositions + speedY;
+    // update positie
+    xPositions[i] = xPositions[i] + speedX[i];
+    yPositions[i] = yPositions[i] + speedY[i];
 
-  // stuiter evt. tegen de kanten
-  if (xPositions <= 0 || xPositions + BREEDTE >= width) {
-    speedX = speedX * -1;
+    // stuiter evt. tegen de kanten
+    if (xPositions[i] <= 0 || xPositions[i] + BREEDTE >= width) {
+      speedX[i] = speedX[i] * -1;
+    }
+
+    if (yPositions[i] <= 0 || yPositions[i] + BREEDTE >= height) {
+      speedY[i] = speedY[i] * -1;
+    }
   }
-
-  if (yPositions <= 0 || yPositions + BREEDTE >= height) {
-    speedY = speedY * -1;
-  }
-
 }
