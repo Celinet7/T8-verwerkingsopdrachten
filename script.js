@@ -18,6 +18,8 @@ var speedX;
 var speedY;
 const BREEDTE = 20;
 
+var mensen;
+
 
 
 /* ********************************************* */
@@ -34,9 +36,23 @@ function setup() {
   createCanvas(1280, 720);
 
   xPositions = [random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE)];
-  yPositions =[ random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE)];
-  speedX =  [random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5)];
+  yPositions = [random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE)];
+  speedX = [random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5)];
   speedY = [random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5)];
+
+  mensen = [{
+    x: 300,
+    y: 600,
+    speedX: 3,
+    speedY: -3
+  },
+  {
+    x: 400,
+    y: 700,
+    speedX: -3,
+    speedY: 3
+  }
+  ];
 }
 
 /**
@@ -49,7 +65,7 @@ function draw() {
   background(0, 0, 0);
 
   //loop
-  for (var i = 0; i < xPositions.length; i++) {
+  /*for (var i = 0; i < xPositions.length; i++) {
     // teken
     noStroke;
     fill(255, 255, 255);
@@ -67,5 +83,22 @@ function draw() {
     if (yPositions[i] <= 0 || yPositions[i] + BREEDTE >= height) {
       speedY[i] = speedY[i] * -1;
     }
+  }*/
+
+  for (var i = 0; i < mensen.length; i++) {
+    // teken
+    noStroke;
+    fill(255, 255, 255);
+    rect(mensen[i].x, mensen[i].y, BREEDTE, BREEDTE);
+
+    // update positie
+    mensen[i].x = mensen[i].x + mensen[i].speedX;
+    mensen[i].y = mensen[i].y + mensen[i].speedY;
+
+    // stuiter evt. tegen de kanten
+    if (xPositions[i] <= 0 || xPositions[i] + BREEDTE >= width) {
+      speedX[i] = speedX[i] * -1;
+    }
   }
+
 }
