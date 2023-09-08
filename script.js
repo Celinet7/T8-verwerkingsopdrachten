@@ -12,10 +12,25 @@
 /* ********************************************* */
 /* globale variabelen die je gebruikt in je game */
 /* ********************************************* */
-var xPositions;
-var yPositions;
-var speedX;
-var speedY;
+class Mens {
+  x;
+  y;
+  speedX;
+  speedY;
+
+  constructor(newX, newY, newSpeedX, newSpeedY) {
+    this.x = newX;
+    this.y = newY;
+    this.speedX = newSpeedX;
+    this.speedY = newSpeedY;
+  }
+
+  update() {
+    this.x = this.x - this.speedX;
+    this.y = this.y - this.speedY;
+  }
+}
+
 const BREEDTE = 20;
 
 var mensen;
@@ -35,10 +50,10 @@ function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
   createCanvas(1280, 720);
 
-  xPositions = [random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE)];
+  /*xPositions = [random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE)];
   yPositions = [random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE)];
   speedX = [random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5)];
-  speedY = [random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5)];
+  speedY = [random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5)];*/
 
   mensen = [{
     x: 300,
@@ -117,6 +132,11 @@ function draw() {
     if (mensen[i].x <= 0 || mensen[i].x + BREEDTE >= width) {
       mensen[i].speedX = mensen[i].speedX * -1;
     }
+    if (mensen[i].y <= 0 || mensen[i].y + BREEDTE >= height) {
+      mensen[i].speedY = mensen[i].speedY * -1;
+    }
   }
+
+  
 
 }
