@@ -48,7 +48,25 @@ function setup() {
   },
   {
     x: 400,
-    y: 700,
+    y: 200,
+    speedX: -3,
+    speedY: 3
+  },
+  {
+    x: 500,
+    y: 300,
+    speedX: -3,
+    speedY: 3
+  },
+  {
+    x: 700,
+    y: 200,
+    speedX: -3,
+    speedY: 3
+  },
+  {
+    x: 1000,
+    y: 500,
     speedX: -3,
     speedY: 3
   }
@@ -96,8 +114,8 @@ function draw() {
     mensen[i].y = mensen[i].y + mensen[i].speedY;
 
     // stuiter evt. tegen de kanten
-    if (xPositions[i] <= 0 || xPositions[i] + BREEDTE >= width) {
-      speedX[i] = speedX[i] * -1;
+    if (mensen[i].x <= 0 || mensen[i].x + BREEDTE >= width) {
+      mensen[i].speedX = mensen[i].speedX * -1;
     }
   }
 
