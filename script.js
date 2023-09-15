@@ -17,23 +17,39 @@ class Mens {
   y;
   speedX;
   speedY;
+  breedte;
 
   constructor(newX, newY, newSpeedX, newSpeedY) {
     this.x = newX;
     this.y = newY;
     this.speedX = newSpeedX;
     this.speedY = newSpeedY;
+    this.breedte = 20;
+  }
+
+  show () {
+    noStroke ();
+    fill(255, 255, 255);
+    
+    rect(this.x, this.y, this.breedte, this.breedte);
   }
 
   update() {
     this.x = this.x - this.speedX;
     this.y = this.y - this.speedY;
+
+    // stuiter evt. tegen de kanten
+    if (this.x <= 0 || this.x + this.breedte >= width) {
+      this.speedX = this.speedX * -1;
+    }
+    if (this.y <= 0 || this.y + this.breedte >= height) {
+      this.speedY = this.speedY * -1;
+    }
   }
 
 }
 
-const BREEDTE = 20;
-var mensen;
+var mensen = [];
 
 
 
@@ -55,7 +71,7 @@ function setup() {
   speedX = [random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5)];
   speedY = [random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5)];*/
 
-  mensen = [{
+  /*mensen = [{
     x: 300,
     y: 600,
     speedX: 4,
@@ -85,7 +101,24 @@ function setup() {
     speedX: -4,
     speedY: 4
   }
-  ];
+  ];*/
+
+  // maak 25 random mensen
+  for (var teller = 0; teller < 25; teller++) {
+    var ruimteTotRand = 50;
+
+    // creëer random positie en snelheid
+    var randomX = random(ruimteTotRand, width - ruimteTotRand);
+    var randomY = random(ruimteTotRand, height - ruimteTotRand);
+    var randomSpeedX = random(-5, 5);
+    var randomSpeedY = random(-5, 5);
+
+    // maak nieuw mensobject
+    var nieuwMens = new Mens(randomX, randomY, randomSpeedX, randomSpeedY);
+
+    // voeg mensobject toe aan array
+    mensen.push(nieuwMens);
+  }
 }
 
 /**
@@ -121,25 +154,21 @@ function draw() {
   for (var i = 0; i < mensen.length; i++) {
     // teken
     noStroke;
-    fill(255, 255, 255);
-    rect(mensen[i].x, mensen[i].y, BREEDTE, BREEDTE);
+    fill(0, 0, 0);
+    /*rect(mensen[i].x, mensen[i].y, BREEDTE, BREEDTE);
 
     // update positie
-    /*mensen[i].x = mensen[i].x + mensen[i].speedX;
+    mensen[i].x = mensen[i].x + mensen[i].speedX;
     mensen[i].y = mensen[i].y + mensen[i].speedY;*/
-    
+    var mens = mensen [i];
 
-    // stuiter evt. tegen de kanten
-    if (mensen[i].x <= 0 || mensen[i].x + BREEDTE >= width) {
-      mensen[i].speedX = mensen[i].speedX * -1;
-    }
-    if (mensen[i].y <= 0 || mensen[i].y + BREEDTE >= height) {
-      mensen[i].speedY = mensen[i].speedY * -1;
-    }
+    mens.show();
 
     mensen[i].update();
+
+
   }
 
-  
+
 
 }
