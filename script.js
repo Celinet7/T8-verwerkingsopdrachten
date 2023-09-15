@@ -18,18 +18,26 @@ class Mens {
   speedX;
   speedY;
   breedte;
+  isBesmet;
 
   constructor(newX, newY, newSpeedX, newSpeedY) {
     this.x = newX;
     this.y = newY;
     this.speedX = newSpeedX;
     this.speedY = newSpeedY;
+    this.isBesmet = false;
     this.breedte = 20;
+    
   }
 
   show () {
     noStroke ();
-    fill(255, 255, 255);
+
+    if (this.isBesmet === true) {
+      fill(255, 0, 0); //rood
+    } else {
+      fill(255, 255, 255); //wit
+    }
     
     rect(this.x, this.y, this.breedte, this.breedte);
   }
@@ -45,6 +53,26 @@ class Mens {
     if (this.y <= 0 || this.y + this.breedte >= height) {
       this.speedY = this.speedY * -1;
     }
+  }
+
+  isOverlappend(andereMens) {
+    // zet teruggeefwaarde standaard op false
+    var overlappend = false;
+  
+    // zet teruggeefwaarde op true als er een overlap is
+    if ( (this.x >= andereMens.x &&
+          this.x <= andereMens.x + andereMens.breedte &&
+          this.y >= andereMens.y &&
+          this.y <= andereMens.y + andereMens.breedte)
+  
+          /* VUL HIER ZELF LATER AAN VOOR DE ANDERE HOEKEN*/
+        ) {
+  
+      overlappend = true;
+    }
+  
+    // stuur de teruggeefwaarde terug
+    return overlappend;
   }
 
 }
@@ -66,42 +94,6 @@ function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
   createCanvas(1280, 720);
 
-  /*xPositions = [random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE), random(0, 1280 - BREEDTE)];
-  yPositions = [random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE), random(0, 720 - BREEDTE)];
-  speedX = [random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5)];
-  speedY = [random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5), random(-5, 5)];*/
-
-  /*mensen = [{
-    x: 300,
-    y: 600,
-    speedX: 4,
-    speedY: -4
-  },
-  {
-    x: 400,
-    y: 200,
-    speedX: -4,
-    speedY: 4
-  },
-  {
-    x: 500,
-    y: 300,
-    speedX: -4,
-    speedY: 4
-  },
-  {
-    x: 700,
-    y: 200,
-    speedX: -4,
-    speedY: 4
-  },
-  {
-    x: 1000,
-    y: 500,
-    speedX: -4,
-    speedY: 4
-  }
-  ];*/
 
   // maak 25 random mensen
   for (var teller = 0; teller < 25; teller++) {
@@ -119,6 +111,8 @@ function setup() {
     // voeg mensobject toe aan array
     mensen.push(nieuwMens);
   }
+
+  mensen[0].isBesmet = true;
 }
 
 /**
@@ -130,26 +124,6 @@ function draw() {
   // zwarte achtergrond
   background(0, 0, 0);
 
-  //loop
-  /*for (var i = 0; i < xPositions.length; i++) {
-    // teken
-    noStroke;
-    fill(255, 255, 255);
-    rect(xPositions[i], yPositions[i], BREEDTE, BREEDTE);
-
-    // update positie
-    xPositions[i] = xPositions[i] + speedX[i];
-    yPositions[i] = yPositions[i] + speedY[i];
-
-    // stuiter evt. tegen de kanten
-    if (xPositions[i] <= 0 || xPositions[i] + BREEDTE >= width) {
-      speedX[i] = speedX[i] * -1;
-    }
-
-    if (yPositions[i] <= 0 || yPositions[i] + BREEDTE >= height) {
-      speedY[i] = speedY[i] * -1;
-    }
-  }*/
 
   for (var i = 0; i < mensen.length; i++) {
     // teken
@@ -165,8 +139,6 @@ function draw() {
     mens.show();
 
     mensen[i].update();
-
-
   }
 
 
