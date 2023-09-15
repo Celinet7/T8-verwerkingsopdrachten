@@ -29,10 +29,10 @@ class Mens {
     this.x = this.x - this.speedX;
     this.y = this.y - this.speedY;
   }
+
 }
 
 const BREEDTE = 20;
-
 var mensen;
 
 
@@ -58,32 +58,32 @@ function setup() {
   mensen = [{
     x: 300,
     y: 600,
-    speedX: 3,
-    speedY: -3
+    speedX: 4,
+    speedY: -4
   },
   {
     x: 400,
     y: 200,
-    speedX: -3,
-    speedY: 3
+    speedX: -4,
+    speedY: 4
   },
   {
     x: 500,
     y: 300,
-    speedX: -3,
-    speedY: 3
+    speedX: -4,
+    speedY: 4
   },
   {
     x: 700,
     y: 200,
-    speedX: -3,
-    speedY: 3
+    speedX: -4,
+    speedY: 4
   },
   {
     x: 1000,
     y: 500,
-    speedX: -3,
-    speedY: 3
+    speedX: -4,
+    speedY: 4
   }
   ];
 }
@@ -125,8 +125,9 @@ function draw() {
     rect(mensen[i].x, mensen[i].y, BREEDTE, BREEDTE);
 
     // update positie
-    mensen[i].x = mensen[i].x + mensen[i].speedX;
-    mensen[i].y = mensen[i].y + mensen[i].speedY;
+    /*mensen[i].x = mensen[i].x + mensen[i].speedX;
+    mensen[i].y = mensen[i].y + mensen[i].speedY;*/
+    
 
     // stuiter evt. tegen de kanten
     if (mensen[i].x <= 0 || mensen[i].x + BREEDTE >= width) {
@@ -135,6 +136,8 @@ function draw() {
     if (mensen[i].y <= 0 || mensen[i].y + BREEDTE >= height) {
       mensen[i].speedY = mensen[i].speedY * -1;
     }
+
+    mensen[i].update();
   }
 
   
