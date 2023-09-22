@@ -27,18 +27,18 @@ class Mens {
     this.speedY = newSpeedY;
     this.isBesmet = false;
     this.breedte = 20;
-    
+
   }
 
-  show () {
-    noStroke ();
+  show() {
+    noStroke();
 
     if (this.isBesmet === true) {
       fill(255, 0, 0); //rood
     } else {
       fill(255, 255, 255); //wit
     }
-    
+
     rect(this.x, this.y, this.breedte, this.breedte);
   }
 
@@ -58,26 +58,26 @@ class Mens {
   isOverlappend(andereMens) {
     // zet teruggeefwaarde standaard op false
     var overlappend = false;
-  
+
     // zet teruggeefwaarde op true als er een overlap is
-    if ( (this.x >= andereMens.x &&
-          this.x <= andereMens.x + andereMens.breedte &&
-          this.y >= andereMens.y &&
-          this.y <= andereMens.y + andereMens.breedte)
-  
-          /* VUL HIER ZELF LATER AAN VOOR DE ANDERE HOEKEN*/
-        ) {
-  
+    if ((
+      this.x < andereMens.x + andereMens.breedte &&
+      this.x + this.breedte > andereMens.x &&
+      this.y < andereMens.y + andereMens.breedte &&
+      this.y + this.breedte > andereMens.y)
+
+    ) {
+
       overlappend = true;
     }
-  
+
     // stuur de teruggeefwaarde terug
     return overlappend;
   }
 
 }
 
-var mensen = [];
+var actoren = [];
 
 
 
@@ -109,10 +109,10 @@ function setup() {
     var nieuwMens = new Mens(randomX, randomY, randomSpeedX, randomSpeedY);
 
     // voeg mensobject toe aan array
-    mensen.push(nieuwMens);
+    actoren.push(nieuwMens);
   }
 
-  mensen[0].isBesmet = true;
+  actoren[0].isBesmet = true;
 }
 
 /**
@@ -125,20 +125,38 @@ function draw() {
   background(0, 0, 0);
 
 
-  for (var i = 0; i < mensen.length; i++) {
+  for (var i = 0; i < actoren.length; i++) {
     // teken
     noStroke;
     fill(0, 0, 0);
-    /*rect(mensen[i].x, mensen[i].y, BREEDTE, BREEDTE);
 
-    // update positie
-    mensen[i].x = mensen[i].x + mensen[i].speedX;
-    mensen[i].y = mensen[i].y + mensen[i].speedY;*/
-    var mens = mensen [i];
+    var mens = actoren[i];
 
     mens.show();
 
-    mensen[i].update();
+    actoren[i].update();
+  }
+
+  // ga alle mensen langs
+  for (var i = 0; i < actoren.length; i++) {
+    var mensA = actoren[i];
+    // ga met mensA opnieuw alle mensen langs om te checken op overlap, behalve met zichzelf
+    for (var j = 0; j < actoren.length; j++) {
+      var mensB = actoren[j];
+      if (mensA != mensB) {
+        // check overlap
+        var actorenOverlappen = mensA.isOverlappend(mensB);
+        if (actorenOverlappen) {
+          // check of er een besmetting optreedt
+          if (mensA.isBesmet || mensB.isBesmet) {
+            // als er één besmet is, wordt ze allebei besmet
+            // als ze allebei besmet zijn, verandert deze code niets.
+            mensA.isBesmet = true;
+            mensB.isBesmet = true;
+          }
+        }
+      }
+    }
   }
 
 
