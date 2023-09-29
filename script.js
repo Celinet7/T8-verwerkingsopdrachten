@@ -74,7 +74,19 @@ class Mens {
     // stuur de teruggeefwaarde terug
     return overlappend;
   }
+}
+  
+class Dokter extends Mens {
+  show() {
+    // teken zoals de klasse Mens dat doet
+    super.show();
 
+    // en daarna nog een rood kruis
+    strokeWeight(5);
+    stroke(255, 0, 0);    // rood
+    line(this.x + this.breedte / 2, this.y, this.x + this.breedte / 2, this.y + this.breedte);
+    line(this.x, this.y + this.breedte / 2, this.x + this.breedte, this.y + this.breedte / 2);
+  }
 }
 
 class Kat {
@@ -186,8 +198,8 @@ function setup() {
     // creëer random positie en snelheid
     var randomX = random(ruimteTotRand, width - ruimteTotRand);
     var randomY = random(ruimteTotRand, height - ruimteTotRand);
-    var randomSpeedX = random(-2, 2);
-    var randomSpeedY = random(-2, 2);
+    var randomSpeedX = random(-2, 3);
+    var randomSpeedY = random(-2, 3);
 
     // maak nieuw mensobject
     var nieuwKat = new Kat(randomX, randomY, randomSpeedX, randomSpeedY);
